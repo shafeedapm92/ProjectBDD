@@ -29,11 +29,17 @@ jobs:
           sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
+          if [ ! -f /usr/bin/google-chrome ]; then
+            echo "Google Chrome installation failed. Binary not found."
+            exit 1
+          fi
 
       - name: Install ChromeDriver
         run: |
           sudo apt-get install -y chromium-chromedriver
-          sudo ln -s /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver || true
+          if [ ! -L /usr/bin/chromedriver ]; then
+            sudo ln -sf /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
+          fi
 
       - name: Run Open_page_test.py
         run: python Open_page_test.py
