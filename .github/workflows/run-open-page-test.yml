@@ -18,11 +18,12 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Install dependencies
-    run: |
+- name: Install selenium
+  run: |
     pip install selenium
-      run: |
-        pip install -r requirements.txt || true
+- name: Install other dependencies
+  run: |
+    pip install -r requirements.txt
 
     - name: Run Open_page_test.py
       run: python Open_page_test.py
