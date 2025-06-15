@@ -34,12 +34,13 @@ jobs:
             exit 1
           fi
 
-      - name: Install ChromeDriver
-        run: |
-          sudo apt-get install -y chromium-chromedriver
-          if [ ! -L /usr/bin/chromedriver ]; then
-            sudo ln -sf /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
-          fi
+- name: Install ChromeDriver
+  run: |
+    sudo apt-get update
+    sudo apt-get install -y chromium-chromedriver
+    if [ ! "$(readlink -f /usr/bin/chromedriver)" = "$(readlink -f /usr/lib/chromium-browser/chromedriver)" ]; then
+      sudo ln -sf /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
+    fi
 
       - name: Run Open_page_test.py
         run: python Open_page_test.py
