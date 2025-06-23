@@ -1,9 +1,11 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-# Set up the Chrome driver (make sure chromedriver is installed and in your PATH)
-driver = webdriver.Chrome()
+# Use webdriver-manager to handle ChromeDriver setup
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
 try:
     # Open the W3Schools homepage
