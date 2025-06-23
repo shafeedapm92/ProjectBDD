@@ -20,33 +20,15 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
-          pip install selenium
-
-     # - name: Install Google Chrome
-      #  run: |
-       #   wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-        #  sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-         # sudo apt-get update
-          #sudo apt-get install -y google-chrome-stable || { echo "Failed to install Google Chrome."; exit 1; }
-          #if [ ! -x "$(command -v google-chrome)" ]; then
-           # echo "Google Chrome installation failed. Binary not found."
-          #exit 1
-          #fi
+          pip install --upgrade pip
+          pip install selenium webdriver-manager
 
       - name: Install Google Chrome
         run: |
-          wget -O /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo apt-get update
-          sudo apt-get install -y /tmp/chrome.deb
-
-      - name: Install ChromeDriver
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-chromedriver
-          if [ ! "$(readlink -f /usr/bin/chromedriver)" = "$(readlink -f /usr/lib/chromium-browser/chromedriver)" ]; then
-          sudo ln -sf /usr/lib/chromium-browser/chromedriver /usr/bin/chromedriver
-          fi
+          sudo apt update
+          sudo apt install -y wget
+          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo apt install -y ./google-chrome-stable_current_amd64.deb
 
       - name: Run Open_page_test.py
         run: python Open_page_test.py
